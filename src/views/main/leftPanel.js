@@ -1,4 +1,8 @@
 import React from 'react'
+
+import {connect} from 'react-redux'
+import {personInfo} from '../../actions'
+
 import styles from './left.module.scss'
 import PanelItem from './components/panelItem'
 import PanelList from './components/panelList'
@@ -6,6 +10,7 @@ import AddFriend from './modal/addFriend'
 import AddGroup from './modal/addGroup'
 
 import API from '../API/index'
+import EditUser from './modal/editUser'
 
 function formatData(arr) {
   return arr.filter(v => v.status === 20).map(item => {
@@ -32,6 +37,7 @@ class LeftPanel extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      userInfo: {},
       selectTab: 1,
       sessionsList: [
         // {id: 1, img: 'https://app.yunxin.163.com/webdemo/im/images/normal.png', name: 'web开发讨论组', time: '13:34', msg: '[langren加入群]'},
@@ -42,21 +48,32 @@ class LeftPanel extends React.Component {
       friendsList: [],
       showAddFriendModal: false,
       showAddGroupModal: false,
+      showEditUser: false
     }
   }
 
   componentDidMount() {
     this.onFriendAll()
     this.getAllGroup()
+    this.getUserInfo()
+  }
+
+  getUserInfo = () => {
+    API.get(`/user/${sessionStorage.userId}`).then(res => {
+      this.setState({
+        userInfo: res.result
+      })
+      this.props.onPersonal(res.result)
+    })
   }
 
   switchTab = (event, type) => {
     this.setState({
       selectTab: type
     })
-    if (type === 2) {
-      this.onFriendAll()
-    }
+    // if (type === 2) {
+    //   this.onFriendAll()
+    // }
     event.preventDefault()
   }
   // 添加好友
@@ -94,24 +111,18 @@ class LeftPanel extends React.Component {
     if (id === 1) {
       this.setState({showAddGroupModal: true})
     }
-    // API.post('/user/send_code', {
-    //   region: '86',
-    //   phone: '13120329553'
-    // }).then(res => {
-    //   API.post('/user/verify_code', {
-    //     region: '86',
-    //     phone: '13120329553',
-    //     code: '9999'
-    //   }).then(res => {
-    //     API.post('/user/register', {
-    //       nickname: 'lightman3',
-    //       password: 'f920123',
-    //       verification_token: res.result.verification_token
-    //     }).then(res => {
-    //       console.log(res)
-    //     })
-    //   })
-    // })
+    
+  }
+  // 编辑个人信息
+  handleShowEditUser = () => {
+    this.setState({
+      showEditUser: true
+    })
+  }
+  closeEditUser = () => {
+    this.setState({
+      showEditUser: false
+    })
   }
   // 退出
   userLogout = (e) => {
@@ -129,13 +140,13 @@ class LeftPanel extends React.Component {
       {id: 1, img: require('../../assets/images/addTeam.png'), name: '创建高级群'},
       {id: 2, img: require('../../assets/images/searchTeam.png'), name: '搜索高级群'},
     ]
-    const addUser = {id: 0, img: require('../../assets/images/addFriend.png'), name: '添加好友'}
+    const addUser = {id: 3, img: require('../../assets/images/addFriend.png'), name: '添加好友'}
     return (
       <div className={styles.leftPanel}>
         <div className={styles.title}>
-          <img src={require('../../assets/images/default-icon.png')} alt="" width="56" height="56" className="radius-circle avatar"/>
-          <span className={styles.userName}>lightman</span>
-          <span><i className={`${styles.cursor} ${'fa fa-pencil'}`}></i></span>
+          <img src={this.state.userInfo.portraitUri ? this.state.userInfo.portraitUri : require('../../assets/images/default-icon.png')} alt="" width="56" height="56" className="radius-circle avatar"/>
+          <span className={styles.userName}>{this.state.userInfo.nickname}</span>
+          <span><i onClick={this.handleShowEditUser} className={`${styles.cursor} ${'fa fa-pencil'}`}></i></span>
           <a href="/login" onClick={this.userLogout} className={styles.exit}>退出</a>
         </div>
         <div className={styles.switchPanel}>
@@ -153,14 +164,14 @@ class LeftPanel extends React.Component {
             <span className={`${this.state.selectTab === 3 ? styles.trangle : ''}`}></span>
           </a>
         </div>
-        <div className={`${styles.item} ${this.state.selectTab === 1 ? '' : 'hide'}`}>
+        {this.state.selectTab === 1 && <div className={`${styles.item}`}>
           <PanelList list={this.state.sessionsList}/>
-        </div>
-        <div className={`${styles.item} ${this.state.selectTab === 2 ? '' : 'hide'}`}>
+        </div>}
+        {this.state.selectTab === 2 && <div className={`${styles.item}`}>
           <PanelItem item={addUser} onItemClick={this.handleAddFriend}/>
           <PanelList list={this.state.friendsList}/>
-        </div>
-        <div className={`${styles.item} ${this.state.selectTab === 3 ? '' : 'hide'}`}>
+        </div>}
+        {this.state.selectTab === 3 && <div className={`${styles.item}`}>
           <ul>
             {teams.map(item => 
               <PanelItem
@@ -171,14 +182,26 @@ class LeftPanel extends React.Component {
             )}
           </ul>
           <PanelList list={this.state.groupsList}/>
-        </div>
+        </div>}
         <div className="">
           {this.state.showAddFriendModal && (<AddFriend onClose={this.closeAddFriendModal} onFriendAll={this.onFriendAll} />)}
           {this.state.showAddGroupModal && (<AddGroup friendsList={this.state.friendsList} onClose={this.closeAddGroupModal} onGetAllGroups={this.getAllGroup}/>)}
+          {this.state.showEditUser && (<EditUser origin={this.state.userInfo} onInfoChange={this.getUserInfo} onClose={this.closeEditUser}/>)}
         </div>
       </div>
     )
   }
 }
 
-export default LeftPanel;
+function mapStateToProps(state) {
+  return {
+    personInfo: state.personInfo.person
+  }
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    onPersonal: (user) => dispatch((personInfo(user)))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeftPanel);

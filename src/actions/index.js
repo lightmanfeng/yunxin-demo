@@ -5,9 +5,23 @@ export const curUser = user => {
   }
 }
 
-export const showUserInfo = id => {
+export const showUserInfo = (id) => {
   return {
     type: 'SHOW_USERINFO',
     id
+  }
+}
+
+export const msgsInfo = (msgInfo) => {
+  return {
+    type: 'ADD_MSG',
+    msgInfo
+  }
+}
+
+export const personInfo = (person) => {
+  return {
+    type: 'PERSONAL',
+    person
   }
 }

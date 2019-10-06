@@ -16,10 +16,10 @@ class panelList extends React.Component {
   render() {
     return(
       <ul>
-        {this.props.list.map(item => 
+        {this.props.list.map((item, index) => 
           <PanelItem
             item={item}
-            key={item.id}
+            key={index}
             activeId={this.state.activeId}
             onItemClick={this.handleClick}/>
         )}

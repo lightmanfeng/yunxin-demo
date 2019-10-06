@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {msgsInfo} from '../../actions'
 import MsgItemMe from './components/msgItemMe'
 import MsgItemYou from './components/msgItemYou'
 import MsgTime from './components/msgTime'
@@ -19,10 +20,19 @@ class RightPanel extends React.Component {
     })
   }
   sendMeg = () => {
+    let msgInfo = {
+      id: this.props.currentUserInfo.id,
+      msg: this.state.inputMsg
+    }
+    this.props.onMsgSend(msgInfo)
+    // state有变化是才会重新render
     document.getElementById('msgText').value = ''
+    this.setState({
+      inputMsg: ''
+    })
   }
   render() {
-    const {currentUserInfo} = this.props
+    const {currentUserInfo, curMsgInfo, personInfo} = this.props
     const data = {img: '', text: '12slakfdjlkajsf laskdjflaskdjflaskdjflaksjdflask312312'}
     return (
       <div className={`${styles.rightPanel} ${'box-sizing'} ${currentUserInfo.name ? '' : 'hide'}`}>
@@ -32,8 +42,10 @@ class RightPanel extends React.Component {
         </div>
         <div className={`${styles.chatContent} ${'box-sizing'}`}>
           <MsgTime time="11:52"/>
-          <MsgItemMe msgInfo={data}/>
           <MsgItemYou msgInfo={data}/>
+          {curMsgInfo[currentUserInfo.id] && curMsgInfo[currentUserInfo.id].map((msg, index) => 
+            <MsgItemMe key={index} userInfo={personInfo} msgInfo={msg}/>
+          )}
         </div>
         <div className={`${styles.chatEditor} ${'box-sizing'}`}>
           <textarea id="msgText" className={styles.msgTextarea} rows="1" maxLength="500" onChange={this.handleInputChange}></textarea>
@@ -45,7 +57,14 @@ class RightPanel extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    currentUserInfo: state.userInfo
+    currentUserInfo: state.userInfo,
+    curMsgInfo: state.msgsInfo,
+    personInfo: state.personInfo.person
   }
 }
-export default connect(mapStateToProps)(RightPanel)
+function mapDispatchToProps(dispatch) {
+  return {
+    onMsgSend: (msgInfo) => dispatch((msgsInfo(msgInfo)))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(RightPanel)

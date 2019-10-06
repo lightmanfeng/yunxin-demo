@@ -196,4 +196,103 @@ li {
   background-color: #fff;
   border-radius: 5px;
 }
+.edit-user {
+  width: 400px;
+  height: 600px;
+  background-color: #fff;
+  border-radius: 5px;
+  color: #333;
+  .u-info {
+    padding: 30px;
+    border-bottom: 1px solid #e4e9ee;
+    display: flex;
+    .u-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+    }
+    .desc {
+      flex: 1;
+      margin-left: 20px;
+      margin-top: 20px;
+      font-size: 16px;
+      line-height: 20px;
+      height: 40px;
+      p {
+        max-width: 200px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        &.nickname {
+          color: #3a4a59;
+        }
+        &.account {
+          color: #6b8299;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  .infos {
+    position: relative;
+    padding: 30px;
+    .operate {
+      position: absolute;
+      right: 30px;
+      top: 30px;
+      span {
+        display: inline-block;
+        border: 1px solid #e4e9ee;
+        border-radius: 8px;
+        padding: 2px 8px;
+        background: #fff;
+        margin-left: 10px;
+        cursor: pointer;
+        &.save {
+          background: #238efa;
+          color: #fff;
+        }
+        &.cancel {
+          background: #eee;
+          color: #3a4a59;
+        }
+      }
+    }
+    .showInfo {
+      .items {
+        height: 22px;
+        line-height: 14px;
+        font-size: 14px;
+        padding: 4px 0;
+        margin-top: 10px;
+        display: flex;
+        .item {
+          width: 50px;
+        }
+        .item-value {
+          flex: 1;
+        }
+      }
+    }
+    .editInfo {
+      .items {
+        input {
+          width: 170px;
+          padding: 0 10px;
+          height: 24px;
+          border: 1px solid #e4e9ee;
+          line-height: 24px;
+          font-size: 14px;
+        }
+        select {
+          display: inline-block;
+          border: 1px solid #e4e9ee;
+          line-height: 14px;
+          font-size: 14px;
+          width: 60px;
+        }
+      }
+    }
+  }
+}
 

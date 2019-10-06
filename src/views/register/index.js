@@ -2,11 +2,13 @@ import React from 'react';
 
 import './index.scss';
 
+import API from '../API'
+
 class Register extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      account: '',
+      phone: '',
       name: '',
       password: ''
     }
@@ -19,6 +21,24 @@ class Register extends React.Component {
   }
 
   handleSubmit = (event) => {
+    API.post('/user/send_code', {
+      region: '86',
+      phone: this.state.phone
+    }).then(res => {
+      API.post('/user/verify_code', {
+        region: '86',
+        phone: this.state.phone,
+        code: '9999'
+      }).then(res => {
+        API.post('/user/register', {
+          nickname: this.state.name,
+          password: this.state.password,
+          verification_token: res.result.verification_token
+        }).then(res => {
+          window.location.href = '/login'
+        })
+      })
+    })
     event.preventDefault()
   }
 
@@ -28,19 +48,19 @@ class Register extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <div className="row">
             <span className="input-tip">
-              账号：
+              手机号：
             </span>
-            <input type="text" value={this.state.account} name="account" onChange={this.handleChange}/>
+            <input type="text" value={this.state.phone} name="phone" onChange={this.handleChange}/>
           </div>
           <div className="row">
             <span className="input-tip">
-              昵称：
+              昵&nbsp;&nbsp;&nbsp;&nbsp;称：
             </span>
               <input type="text" value={this.state.name} name="name" onChange={this.handleChange}/>
           </div>
           <div className="row">
             <span className="input-tip">
-              密码：
+              密&nbsp;&nbsp;&nbsp;&nbsp;码：
             </span>
               <input type="password" value={this.state.password} name="password" onChange={this.handleChange}/>
           </div>

@@ -7,10 +7,10 @@ function MsgItemMe(props) {
     <div className={`${styles.item} ${styles.itemMe}`}>
       <div className={styles.msg}>
         <div className={styles.msgText}>
-          <div className={styles.box}>{props.msgInfo.text}</div>
+          <div className={styles.box}>{props.msgInfo}</div>
         </div>
       </div>
-      <img className={styles.img} src={props.msgInfo.img ? props.magInfo.img : require('../../../assets/images/default-icon.png')} alt=""/>
+      <img className={styles.img} src={props.userInfo.portraitUri ? props.userInfo.portraitUri : require('../../../assets/images/default-icon.png')} alt=""/>
     </div>
   )
 }

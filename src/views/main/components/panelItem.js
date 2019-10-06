@@ -9,11 +9,15 @@ import {curUser, showUserInfo} from '../../../actions'
 function PanelItem(props) {
   const handleClick = () => {
     props.onItemClick(props.item.id)
-    onCurItemClick(props.item)
+    if (props.item.origin) {
+      onCurItemClick(props.item)
+    }
   }
   const handleShowUserInfo = (e) => {
-    e.stopPropagation()
-    onShowUserInfo(props.item.id)
+    if (props.item.origin && props.item.origin.user) {
+      onShowUserInfo(props.item.id)
+      e.stopPropagation()
+    }
   }
   const {onCurItemClick, onShowUserInfo, showModal} = props
 
