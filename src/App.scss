@@ -1,0 +1,199 @@
+body, textarea, input, button, select, keygen, legend {
+  outline: 0;
+}
+html, body {
+  height: 100%;
+  border: 0;
+  background-color: #f5f5f5;
+  color: #666;
+  font-size: 12px;
+}
+html, body, h1, h2, h3, h4, h5, h6, div, dl, dt, dd, ul, ol, li, p, blockquote, pre, hr, figure, table, caption, th, td, form, fieldset, legend, input, button, textarea, menu {
+  margin:0;
+  padding: 0;
+}
+#root, #App {
+  height: 100%;
+}
+.box-sizing {
+  box-sizing: border-box;
+}
+.hide {
+  display: none !important;
+}
+.gray {
+  color: gray;
+}
+.blue {
+  color: #0888ff;
+}
+li {
+  list-style: none;
+}
+
+/* 模态框 */
+.mask {
+  position: fixed;
+  top:0;
+  bottom: 0;
+  left:0;
+  right:0;
+  background: rgba(0,0,0,0.65);
+}
+.modal-default {
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%)
+}
+.title-default {
+  height: 50px;
+  line-height: 50px;
+  padding: 0 10px;
+  background: #e5f4ff;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  color: #666;
+}
+.icon-close {
+  font-size: 20px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+}
+.btns-default {
+  position: absolute;
+  bottom: 0;
+  padding: 22px 0;
+  width: 100%;
+  border-top: 1px solid #e0e6eb;
+  text-align: center;
+  .btn {
+    font-size: 16px;
+    border-radius: 4px;
+    width: 100px;
+    line-height: 34px;
+    color: #fff;
+    cursor: pointer;
+  }
+  .btn-cancel {
+    border: 1px solid #ccc;
+    background-color: #eee;
+    color: #666;
+    margin-right: 14px;
+  }
+  .btn-ok {
+    background-color: #0888ff;
+    border: 1px solid #0070d9;
+  }
+}
+.add-friend {
+  width: 400px;
+  height: 250px;
+  background-color: #fff;
+  border-radius: 5px;
+  .content {
+    padding-top: 20px;
+    position: relative;
+    text-align: center;
+    .add-input {
+      height: 34px;
+      width: 300px;
+      border: 1px solid #e0e6eb;
+      font-size: 14px;
+      padding: 0 15px;
+    }
+    .user-info {
+      display: flex;
+      padding: 0 30px;
+      img {
+        display: inline-block;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+      }
+      .user-desc {
+        flex: 1;
+        text-align: left;
+        padding: 8px;
+        margin-left: 15px;
+        color: #333;
+        font-size: 14px;
+      }
+    }
+  }
+}
+.add-group {
+  width: 680px;
+  height: 600px;
+  background-color: #fff;
+  border-radius: 5px;
+  .group-name {
+    padding: 10px 30px;
+    input {
+      height: 34px;
+      width: 300px;
+      border: 1px solid #e0e6eb;
+      font-size: 14px;
+      padding: 0 15px;
+    }
+  }
+  .content {
+    display: flex;
+    border-top: 1px solid #ececec;
+    .user-list {
+      width: 448px;
+      height: 400px;
+      border-right: 1px solid #ececec;
+      padding: 20px;
+      ul {
+        li {
+          display: inline-block;
+          margin-bottom: 10px;
+          width: 190px;
+          margin-right: 10px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          img {
+            width: 40px;
+            height: 40px;
+            margin: 0 8px;
+            vertical-align: middle;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+    .added-list {
+      flex: 1;
+      height: 400px;
+      padding: 5px 10px;
+      ul {
+        padding: 20px;
+        li {
+          width: 50%;
+          display: inline-block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          text-align: center;
+          margin-bottom: 10px;
+          img {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+  }
+}
+.user-info {
+  width: 400px;
+  height: 600px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
