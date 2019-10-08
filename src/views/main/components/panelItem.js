@@ -1,8 +1,6 @@
 import React from 'react'
 import styles from './panelItem.module.scss'
 
-import UserInfo from '../modal/userInfo'
-
 import {connect} from 'react-redux'
 import {curUser, showUserInfo} from '../../../actions'
 
@@ -19,9 +17,9 @@ function PanelItem(props) {
       e.stopPropagation()
     }
   }
-  const {onCurItemClick, onShowUserInfo, showModal} = props
+  const {onCurItemClick, onShowUserInfo} = props
 
-  return [
+  return (
     <li className={`${styles.panel_item} ${props.activeId === props.item.id ? styles.active : ''}`} onClick={handleClick}>
       <div className={styles.panel_avatar}>
         <img onClick={handleShowUserInfo} className={styles.panel_image} src={props.item.img ? props.item.img : require('../../../assets/images/default-icon.png')} alt=""/>
@@ -30,16 +28,13 @@ function PanelItem(props) {
         <span>{props.item.name}</span>
         <b>{props.item.time}</b>
       </div>
-    </li>,
-    <div>
-      {showModal.show && showModal.id === props.item.id && <UserInfo/>}
-    </div>
-  ]
+    </li>
+  )
 }
 function mapStateToProps(state) {
   return {
-    currentUserInfo: state.userInfo,
-    showModal: state.showUserInfo
+    currentUserInfo: state.userInfo
+    // showModal: state.showUserInfo
   }
 }
 

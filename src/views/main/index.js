@@ -1,5 +1,10 @@
 import React from 'react';
 
+import UserInfo from './modal/userInfo'
+
+import {connect} from 'react-redux'
+import {showUserInfo} from './../../actions'
+
 import LeftPanel from './leftPanel'
 import RightPanel from './rightPanel'
 
@@ -9,27 +14,36 @@ class Main extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      userInfo: null, // 用户信息
-      sessionsList: [], // 最近联系人
-      friendsList: [], // 好友列表
-      teamsList: [] // 群组列表
+      
     }
   }
   render() {
     return (
       <div className={styles.wrapper}>
         <div className={`${styles.mainWrapper} ${'box-sizing'}`}>
-          <LeftPanel
-            userInfo={this.state.userInfo}
-            sessionsList={this.state.sessionsList}
-            friendsList={this.state.friendsList}
-            teamsList={this.state.teamsList}>
+          <LeftPanel>
           </LeftPanel>
           <RightPanel></RightPanel>
+        </div>
+        <div>
+          {this.props.showModal.show && <UserInfo/>}
         </div>
       </div>
     )
   }
 }
 
-export default Main;
+function mapStateToProps(state) {
+  return {
+    showModal: state.showUserInfo
+  }
+}
+
+// Map Redux actions to component props
+function mapDispatchToProps(dispatch) {
+  return {
+    onShowUserInfo: (item) => dispatch(showUserInfo(item))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main)
