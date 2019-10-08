@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import { Redirect } from 'react-router-dom'
 
 import styles from './index.module.scss'
 import API from '../API/index'
@@ -8,7 +9,8 @@ class Login extends React.Component {
     super(props)
     this.state = {
       name: '',
-      password: ''
+      password: '',
+      redirect: false
     }
   }
 
@@ -27,7 +29,7 @@ class Login extends React.Component {
       if (res.code === 200 && res.result.id) {
         sessionStorage.userId = res.result.id
       }
-      window.location.href = '/main'
+      // window.location.href = '/main'
     }).catch(e => {
     })
     event.preventDefault()
@@ -35,6 +37,11 @@ class Login extends React.Component {
   }
 
   render() {
+    if (this.state.redirect) {
+      return (
+        <Redirect to="/main" />
+      )
+    }
     return (
       <div className={styles['container-login']}>
         <form onSubmit={this.handleSubmit}>
@@ -63,4 +70,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default Login
