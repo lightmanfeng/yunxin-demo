@@ -54,6 +54,11 @@
   text-align: left;
   .msgText:after {
     right: 100%;
-    border-right: 5px solid #5cacde;
+    border-right: 5px solid #eaeeef;
+  }
+  .msg .msgText {
+    color: #6b8299;
+    background: #eaeeef;
+    border-color: #eaeeef;
   }
 }

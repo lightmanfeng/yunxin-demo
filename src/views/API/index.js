@@ -1,4 +1,4 @@
-const BaseUrl = 'http://localhost:8585'
+const BaseUrl = 'http://10.115.16.17:8585'
 
 let initHeaders = new Headers()
     initHeaders.append('Accept', 'application/json, text/plain, */*')
