@@ -10,7 +10,8 @@ class Login extends React.Component {
     this.state = {
       name: '',
       password: '',
-      redirect: false
+      redirect: false,
+      wrongPassword: false
     }
   }
 
@@ -28,6 +29,13 @@ class Login extends React.Component {
     }).then(res => {
       if (res.code === 200 && res.result.id) {
         sessionStorage.userId = res.result.id
+        this.setState({
+          redirect: true
+        })
+      } else if (res.code === 1001) {
+        this.setState({
+          wrongPassword: true
+        })
       }
       // window.location.href = '/main'
     }).catch(e => {
@@ -58,7 +66,7 @@ class Login extends React.Component {
             </span>
           </div>
           <div className={styles.row}>
-            <div className={`${styles['error-msg']} ${styles.hide}`}>密码错误</div>
+            <div className={`${styles['error-msg']} ${this.state.wrongPassword ? '' : styles.hide}`}>密码错误</div>
           </div>
           <div className={styles.row}>
             <input type="submit" className={`${styles.btn} ${styles['btn-login']}`} vlaue="登录"/>
